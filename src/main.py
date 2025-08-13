@@ -1,5 +1,7 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from routes import tasks
+from routes.tasks import router
+from database import init_db
 
 app = FastAPI(
     title="Task API",
@@ -7,7 +9,14 @@ app = FastAPI(
     version="1.0.0"
 )
 
-app.include_router(tasks.router, prefix="/tasks", tags=["Tasks"])
+app.include_router(router, prefix="/tasks", tags=["Tasks"])
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_db()
+    yield
+
 
 @app.get("/")
 def root():
