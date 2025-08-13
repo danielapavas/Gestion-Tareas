@@ -1,8 +1,6 @@
 import os
 from pymongo import ASCENDING
 from motor.motor_asyncio import AsyncIOMotorClient
-from dotenv import load_dotenv
-load_dotenv()
 
 MONGO_URL = os.getenv("MONGO_URL")
 MONGO_DB = os.getenv("MONGO_DB")
